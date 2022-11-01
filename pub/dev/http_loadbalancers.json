@@ -1,0 +1,59 @@
+{
+  "metadata": {
+    "name": "<name>",
+    "labels": {}
+  },
+  "spec": {
+    "domains": [
+      "<domain>"
+    ],
+    "https_auto_cert": {
+      "http_redirect": true,
+      "add_hsts": true,
+      "port": 443,
+      "tls_config": {
+        "default_security": {}
+      },
+      "no_mtls": {},
+      "default_header": {},
+      "enable_path_normalize": {},
+      "non_default_loadbalancer": {}
+    },
+    "advertise_on_public_default_vip": {},
+    "default_route_pools": [
+      {
+        "pool": {
+          "tenant": "<tenant>",
+          "namespace": "<namespace>",
+          "name": "<poolname>",
+          "kind": "origin_pool"
+        },
+        "weight": 1,
+        "priority": 1,
+        "endpoint_subsets": {}
+      }
+    ],
+    "routes": [],
+    "app_firewall": {
+      "tenant": "<tenant>",
+      "namespace": "<namespace>",
+      "name": "<wafname>",
+      "kind": "app_firewall"
+    },
+    "add_location": true,
+    "no_challenge": {},
+    "user_id_client_ip": {},
+    "disable_rate_limit": {},
+    "waf_exclusion_rules": [],
+    "data_guard_rules": [],
+    "blocked_clients": [],
+    "trusted_clients": [],
+    "ddos_mitigation_rules": [],
+    "service_policies_from_namespace": {},
+    "round_robin": {},
+    "multi_lb_app": {},
+    "disable_bot_defense": {},
+    "disable_api_definition": {},
+    "disable_ip_reputation": {}
+  }
+}

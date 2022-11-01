@@ -1,0 +1,52 @@
+name: $(SourceBranchName).$(date:yyyyMMdd).$(Rev:rr)
+trigger: none
+# Pipeline Variables
+# Update filename in task ScriptArguments to match json file.
+variables:
+- name: namespace
+  value: #namespace
+- name: domain
+  value: #f5-xc-domain
+- name: method
+  value: put # Change value to "delete" to delete
+- name: directory
+  value: pub/dev
+
+stages:
+- stage: Development
+  jobs:
+  - deployment: Job_1
+    displayName: Agent job 1 - Create or Update
+    environment: Development
+    strategy:
+      runOnce:
+        deploy:
+          pool:
+            vmImage: windows-latest
+          steps:
+          - checkout: self
+            fetchDepth: 1
+          # HealthChecks - Create or Update
+          - task: AzurePowerShell@5
+            displayName: HealthChecks - Create or Update
+            inputs:
+              ConnectedServiceNameARM: d12f2ae8-55a9-4def-b287-5e95ed0f3769
+              ScriptPath: xc_api_request.ps1
+              ScriptArguments: -filename $('healthchecks') -operation $('healthchecks') -path $(directory) -namespace $(namespace) -domain $(domain) -method $(method) -secret $(secret) -content $('application/json')
+              TargetAzurePs: LatestVersion
+          # Origin Pools - Create or Update
+          - task: AzurePowerShell@5
+            displayName: Origin Pools - Create or Update
+            inputs:
+              ConnectedServiceNameARM: d12f2ae8-55a9-4def-b287-5e95ed0f3769
+              ScriptPath: xc_api_request.ps1
+              ScriptArguments: -filename $('origin_pools') -operation $('origin_pools') -path $(directory) -namespace $(namespace) -domain $(domain) -method $(method) -secret $(secret) -content $('application/json')
+              TargetAzurePs: LatestVersion
+          # HTTP Loadbalancers - Create or Update
+          - task: AzurePowerShell@5
+            displayName: HTTP Loadbalancers - Create or Update
+            inputs:
+              ConnectedServiceNameARM: d12f2ae8-55a9-4def-b287-5e95ed0f3769
+              ScriptPath: xc_api_request.ps1
+              ScriptArguments: -filename $('http_loadbalancers') -operation $('http_loadbalancers') -path $(directory) -namespace $(namespace) -domain $(domain) -method $(method) -secret $(secret) -content $('application/json')
+              TargetAzurePs: LatestVersion
