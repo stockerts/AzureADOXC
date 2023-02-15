@@ -16,7 +16,7 @@ variables:
 - name: method
   value: put # Change value to "delete" to delete
 - name: directory
-  value: pub_kv
+  value: pub_kv/dev
 
 stages:
 - stage: Development
