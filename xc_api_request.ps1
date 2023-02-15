@@ -1,42 +1,43 @@
-# Azure DevOps Variables
 [CmdletBinding()]
 param (
     $operation,
+    $content,
     $secret,
     $domain,
     $namespace,
-    $content,
     $method,
     $path,
     $filename
 )
 
-# Nested Variables
+# Define the header variable
 $header = @{
     'Content-Type' = $content
     'Authorization' = $secret
 }
+
+# Get the content of the JSON file
 $body = Get-Content ".\$path\$filename.json"
 
-# Fetch assetname from Json
-$assetname = $body | convertfrom-json | Select-Object -ExpandProperty metadata | Select-Object -ExpandProperty name
-
-# Get Request Status
+# Get the asset name from the JSON file
+$assetname = $body | ConvertFrom-Json |
+    Select-Object -ExpandProperty metadata |
+    Select-Object -ExpandProperty name
+    
+# Get the request status
 Write-Verbose -Verbose "Checking for $operation named $assetname"
+
 Try {
-Invoke-WebRequest -Uri https://$domain/api/config/namespaces/$namespace/$operation/$assetname -Method get -header $header
+  Invoke-WebRequest -Uri "https://$domain/api/config/namespaces/$namespace/$operation/$assetname" -Method get -Header $header
 } Catch {
-$status = $_.exception.response.statuscode
+  $status = $_.Exception.Response.StatusCode
 }
 
-# Created or Update based on Request Status
-if ('NotFound' -eq $status)
-{
-Write-Verbose -Verbose "$assetname within $operation was not found and is being created"
-Invoke-WebRequest -Uri https://$domain/api/config/namespaces/$namespace/$operation -Method post -header $header -body $body
-}
-else
-{
-Write-Verbose -Verbose "$assetname within $operation was found and is being updated"
-Invoke-WebRequest -Uri https://$domain/api/config/namespaces/$namespace/$operation/$assetname -Method $method -header $header -body $body
+# Create or update the asset based on the request status
+if ('NotFound' -eq $status) {
+  Write-Verbose -Verbose "$assetname within $operation was not found and is being created"
+  Invoke-WebRequest -Uri "https://$domain/api/config/namespaces/$namespace/$operation" -Method post -Header $header -Body $body
+} else {
+  Write-Verbose -Verbose "$assetname within $operation was found and is being updated"
+  Invoke-WebRequest -Uri "https://$domain/api/config/namespaces/$namespace/$operation/$assetname" -Method $method -Header $header -Body $body
 }
