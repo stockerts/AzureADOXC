@@ -1,7 +1,7 @@
 {
   "metadata": {
     "name": "<name>-service-policy",
-    "namespace": "namespacename",
+    "namespace": "<namespace>",
     "labels": {},
     "annotations": {},
     "disable": false
@@ -12,14 +12,14 @@
     "rules": [
       {
         "kind": "service_policy_rule",
-        "namespace": "namespacename"
+        "namespace": "<namespace>"
       }
     ],
     "allow_list": {
       "prefix_list": {
         "prefixes": [
-          "0.0.0.0/32",
-          "0.0.0.1/32"
+          "<0.0.0.0/32>",
+          "<0.0.0.0/32>"
         ]
       },
       "ip_prefix_set": [],
