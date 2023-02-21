@@ -1,0 +1,34 @@
+{
+  "metadata": {
+    "name": "<name>-service-policy",
+    "namespace": "namespacename",
+    "labels": {},
+    "annotations": {},
+    "disable": false
+  },
+  "spec": {
+    "algo": "FIRST_MATCH",
+    "any_server": {},
+    "rules": [
+      {
+        "kind": "service_policy_rule",
+        "namespace": "namespacename"
+      }
+    ],
+    "allow_list": {
+      "prefix_list": {
+        "prefixes": [
+          "0.0.0.0/32",
+          "0.0.0.1/32"
+        ]
+      },
+      "ip_prefix_set": [],
+      "asn_set": [],
+      "country_list": [],
+      "tls_fingerprint_classes": [],
+      "tls_fingerprint_values": [],
+      "default_action_next_policy": {}
+    },
+    "simple_rules": []
+  }
+}
