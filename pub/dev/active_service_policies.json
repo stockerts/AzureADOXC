@@ -1,9 +1,9 @@
 {
-  "namespace": "namespacename",
+  "namespace": "<namespace>",
   "service_policies": [
   {
-  "name": "policyname",
-  "namespace": "namespacename"
+  "name": "<policyname>",
+  "namespace": "<namespace>"
   }
   ]
   }
