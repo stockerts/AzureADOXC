@@ -19,8 +19,8 @@ $secret = Get-AzKeyVaultSecret -VaultName $azkvname -Name $azkvsecretname -AsPla
 
 # Define the header variable
 $header = @{
-    'Content-Type' = $content
-    'Authorization' = $secret
+  'Content-Type' = $content
+  'Authorization' = $secret
 }
 
 # Get the content of the JSON file
@@ -28,19 +28,19 @@ $body = Get-Content ".\$path\$filename.json"
 
 # Get the asset name from the JSON file
 if ('active_service_policies' -ine $operation) {
-$assetname = $body | ConvertFrom-Json |
-    Select-Object -ExpandProperty metadata |
-    Select-Object -ExpandProperty name
+  $assetname = $body | ConvertFrom-Json |
+  Select-Object -ExpandProperty metadata |
+  Select-Object -ExpandProperty name
 }
     
 # Get the request status
 if ('active_service_policies' -ine $operation) {
-Write-Verbose -Verbose "Checking for $operation named $assetname"
-Try {
-  Invoke-WebRequest -Uri "https://$domain/api/config/namespaces/$namespace/$operation/$assetname" -Method get -Header $header
-} Catch {
-  $status = $_.Exception.Response.StatusCode
-}
+  Write-Verbose -Verbose "Checking for $operation named $assetname"
+  Try {
+    Invoke-WebRequest -Uri "https://$domain/api/config/namespaces/$namespace/$operation/$assetname" -Method get -Header $header
+  } Catch {
+    $status = $_.Exception.Response.StatusCode
+  }
 }
 
 # Create or update the asset based on the request status
