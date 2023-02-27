@@ -4,6 +4,10 @@
   {
   "name": "<policyname>",
   "namespace": "<namespace>"
+  },
+  {
+  "name": "<policyname>",
+  "namespace": "<namespace>"
   }
   ]
   }
