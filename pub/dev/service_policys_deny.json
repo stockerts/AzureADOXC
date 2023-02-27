@@ -1,0 +1,27 @@
+{
+  "metadata": {
+    "name": "<name>",
+    "labels": {},
+    "annotations": {},
+    "disable": false
+  },
+  "spec": {
+    "algo": "FIRST_MATCH",
+    "any_server": {},
+    "rules": [],
+    "deny_all_requests": {},
+    "simple_rules": [
+      {
+        "action": "DENY",
+        "headers": [],
+        "scheme": [],
+        "rate_limiters": [],
+        "rate_limiter_specs": [],
+        "challenge_action": "DEFAULT_CHALLENGE",
+        "query_params": [],
+        "arg_matchers": [],
+        "cookie_matchers": []
+      }
+    ]
+  }
+}
