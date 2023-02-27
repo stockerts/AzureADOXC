@@ -38,7 +38,7 @@ stages:
             inputs:
               ConnectedServiceNameARM: d12f2ae8-55a9-4def-b287-5e95ed0f3769
               ScriptPath: xc_api_request_kv.ps1
-              ScriptArguments: -filename $('healthchecks') -operation $('healthchecks') -path $(directory) -namespace $(namespace) -domain $(domain) -method $(method) -content $('application/json') -azsubname $(azsubname) -azkvname $(azkvname) -azkvsecretname $(azkvsecretname)
+              ScriptArguments: -filename $('healthchecks') -operation $('healthchecks') -path $(directory) -namespace $(namespace) -domain $(domain) -method $(method) -content $('application/json') -azsubname "$(azsubname)" -azkvname $(azkvname) -azkvsecretname $(azkvsecretname)
               TargetAzurePs: LatestVersion
           # Origin Pools - Create or Update
           - task: AzurePowerShell@5
@@ -46,7 +46,7 @@ stages:
             inputs:
               ConnectedServiceNameARM: d12f2ae8-55a9-4def-b287-5e95ed0f3769
               ScriptPath: xc_api_request_kv.ps1
-              ScriptArguments: -filename $('origin_pools') -operation $('origin_pools') -path $(directory) -namespace $(namespace) -domain $(domain) -method $(method) -content $('application/json') -azsubname $(azsubname) -azkvname $(azkvname) -azkvsecretname $(azkvsecretname)
+              ScriptArguments: -filename $('origin_pools') -operation $('origin_pools') -path $(directory) -namespace $(namespace) -domain $(domain) -method $(method) -content $('application/json') -azsubname "$(azsubname)" -azkvname $(azkvname) -azkvsecretname $(azkvsecretname)
               TargetAzurePs: LatestVersion
           # HTTP Loadbalancers - Create or Update
           - task: AzurePowerShell@5
@@ -54,15 +54,23 @@ stages:
             inputs:
               ConnectedServiceNameARM: d12f2ae8-55a9-4def-b287-5e95ed0f3769
               ScriptPath: xc_api_request_kv.ps1
-              ScriptArguments: -filename $('http_loadbalancers') -operation $('http_loadbalancers') -path $(directory) -namespace $(namespace) -domain $(domain) -method $(method) -content $('application/json') -azsubname $(azsubname) -azkvname $(azkvname) -azkvsecretname $(azkvsecretname)
+              ScriptArguments: -filename $('http_loadbalancers') -operation $('http_loadbalancers') -path $(directory) -namespace $(namespace) -domain $(domain) -method $(method) -content $('application/json') -azsubname "$(azsubname)" -azkvname $(azkvname) -azkvsecretname $(azkvsecretname)
               TargetAzurePs: LatestVersion
           # Service Policy - Create or Update
           - task: AzurePowerShell@5
-            displayName: Service Policy - Create or Update
+            displayName: Service Policy Deny All - Create or Update
             inputs:
               ConnectedServiceNameARM: d12f2ae8-55a9-4def-b287-5e95ed0f3769
               ScriptPath: xc_api_request_kv.ps1
-              ScriptArguments: -filename $('service_policys') -operation $('service_policys') -path $(directory) -namespace $(namespace) -domain $(domain) -method $(method) -content $('application/json') -azsubname $(azsubname) -azkvname $(azkvname) -azkvsecretname $(azkvsecretname)
+              ScriptArguments: -filename $('service_policys_deny') -operation $('service_policys') -path $(directory) -namespace $(namespace) -domain $(domain) -method $(method) -content $('application/json') -azsubname "$(azsubname)" -azkvname $(azkvname) -azkvsecretname $(azkvsecretname)
+              TargetAzurePs: LatestVersion
+          # Service Policy - Create or Update
+          - task: AzurePowerShell@5
+            displayName: Service Policy IP Allow - Create or Update
+            inputs:
+              ConnectedServiceNameARM: d12f2ae8-55a9-4def-b287-5e95ed0f3769
+              ScriptPath: xc_api_request_kv.ps1
+              ScriptArguments: -filename $('service_policys_ipallow') -operation $('service_policys') -path $(directory) -namespace $(namespace) -domain $(domain) -method $(method) -content $('application/json') -azsubname "$(azsubname)" -azkvname $(azkvname) -azkvsecretname $(azkvsecretname)
               TargetAzurePs: LatestVersion
           # Service Policy - Set Active
           - task: AzurePowerShell@5
@@ -70,5 +78,5 @@ stages:
             inputs:
               ConnectedServiceNameARM: d12f2ae8-55a9-4def-b287-5e95ed0f3769
               ScriptPath: xc_api_request_kv.ps1
-              ScriptArguments: -filename $('active_service_policies') -operation $('active_service_policies') -path $(directory) -namespace $(namespace) -domain $(domain) -method $('post') -content $('application/json') -azsubname $(azsubname) -azkvname $(azkvname) -azkvsecretname $(azkvsecretname)
+              ScriptArguments: -filename $('active_service_policies') -operation $('active_service_policies') -path $(directory) -namespace $(namespace) -domain $(domain) -method $('post') -content $('application/json') -azsubname "$(azsubname)" -azkvname $(azkvname) -azkvsecretname $(azkvsecretname)
               TargetAzurePs: LatestVersion
