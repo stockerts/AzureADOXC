@@ -4,19 +4,19 @@ trigger: none
 # Update filename in task ScriptArguments to match json file.
 variables:
 - name: azsubname
-  value:
+  value: azuresubname
 - name: azkvname
-  value: 
+  value: azurekeyvaultname
 - name: azkvsecretname
-  value: 
+  value: azuresecretname
 - name: namespace
-  value: 
+  value: namespace
 - name: domain
-  value: 
+  value: xcdomainname
 - name: method
   value: put # Change value to "delete" to delete
 - name: directory
-  value: 
+  value: pub/dev
 
 stages:
 - stage: Development
