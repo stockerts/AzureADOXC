@@ -60,13 +60,17 @@ Pipeline YAML
 Azure DevOps Pipline
 
 `azsubname`
+
 `azkvname` *
+
 `azkvsecretname` *
 
 Distributed Cloud
 
 `namespace`
+
 `domain`
+
 `method`
 
 Repository
