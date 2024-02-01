@@ -4,9 +4,9 @@ trigger: none
 # Update filename in task ScriptArguments to match json file.
 variables:
 - name: namespace
-  value: #namespace
+  value: namespace
 - name: domain
-  value: #f5-xc-domain
+  value: xcdomainname
 - name: method
   value: put # Change value to "delete" to delete
 - name: directory
