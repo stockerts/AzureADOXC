@@ -30,7 +30,7 @@ stages:
           - task: AzurePowerShell@5
             displayName: HealthChecks - Create or Update
             inputs:
-              ConnectedServiceNameARM: d12f2ae8-55a9-4def-b287-5e95ed0f3769
+              azureSubscription: 'subscription_name'
               ScriptPath: xc_api_request.ps1
               ScriptArguments: -filename $('healthchecks') -operation $('healthchecks') -path $(directory) -namespace $(namespace) -domain $(domain) -method $(method) -secret $(secret) -content $('application/json')
               TargetAzurePs: LatestVersion
@@ -38,7 +38,7 @@ stages:
           - task: AzurePowerShell@5
             displayName: Origin Pools - Create or Update
             inputs:
-              ConnectedServiceNameARM: d12f2ae8-55a9-4def-b287-5e95ed0f3769
+              azureSubscription: 'subscription_name'
               ScriptPath: xc_api_request.ps1
               ScriptArguments: -filename $('origin_pools') -operation $('origin_pools') -path $(directory) -namespace $(namespace) -domain $(domain) -method $(method) -secret $(secret) -content $('application/json')
               TargetAzurePs: LatestVersion
@@ -46,7 +46,7 @@ stages:
           - task: AzurePowerShell@5
             displayName: HTTP Loadbalancers - Create or Update
             inputs:
-              ConnectedServiceNameARM: d12f2ae8-55a9-4def-b287-5e95ed0f3769
+              azureSubscription: 'subscription_name'
               ScriptPath: xc_api_request.ps1
               ScriptArguments: -filename $('http_loadbalancers') -operation $('http_loadbalancers') -path $(directory) -namespace $(namespace) -domain $(domain) -method $(method) -secret $(secret) -content $('application/json')
               TargetAzurePs: LatestVersion
