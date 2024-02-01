@@ -1,0 +1,13 @@
+{
+  "namespace": "<namespace>",
+  "service_policies": [
+  {
+  "name": "<policyname>",
+  "namespace": "<namespace>"
+  },
+  {
+  "name": "<policyname>",
+  "namespace": "<namespace>"
+  }
+  ]
+  }

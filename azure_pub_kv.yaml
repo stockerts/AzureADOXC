@@ -3,6 +3,12 @@ trigger: none
 # Pipeline Variables
 # Update filename in task ScriptArguments to match json file.
 variables:
+- name: azsubname
+  value: azuresubname
+- name: azkvname
+  value: azurekeyvaultname
+- name: azkvsecretname
+  value: azuresecretname
 - name: namespace
   value: namespace
 - name: domain
@@ -10,7 +16,7 @@ variables:
 - name: method
   value: put # Change value to "delete" to delete
 - name: directory
-  value: pub/dev
+  value: dev
 
 stages:
 - stage: Development
@@ -31,22 +37,22 @@ stages:
             displayName: HealthChecks - Create or Update
             inputs:
               azureSubscription: 'subscription_name'
-              ScriptPath: xc_api_request.ps1
-              ScriptArguments: -filename $('healthchecks') -operation $('healthchecks') -path $(directory) -namespace $(namespace) -domain $(domain) -method $(method) -secret $(secret) -content $('application/json')
+              ScriptPath: xc_api_request_kv.ps1
+              ScriptArguments: -filename $('healthchecks') -operation $('healthchecks') -path $(directory) -namespace $(namespace) -domain $(domain) -method $(method) -content $('application/json') -azsubname $(azsubname) -azkvname $(azkvname) -azkvsecretname $(azkvsecretname)
               TargetAzurePs: LatestVersion
           # Origin Pools - Create or Update
           - task: AzurePowerShell@5
             displayName: Origin Pools - Create or Update
             inputs:
               azureSubscription: 'subscription_name'
-              ScriptPath: xc_api_request.ps1
-              ScriptArguments: -filename $('origin_pools') -operation $('origin_pools') -path $(directory) -namespace $(namespace) -domain $(domain) -method $(method) -secret $(secret) -content $('application/json')
+              ScriptPath: xc_api_request_kv.ps1
+              ScriptArguments: -filename $('origin_pools') -operation $('origin_pools') -path $(directory) -namespace $(namespace) -domain $(domain) -method $(method) -content $('application/json') -azsubname $(azsubname) -azkvname $(azkvname) -azkvsecretname $(azkvsecretname)
               TargetAzurePs: LatestVersion
           # HTTP Loadbalancers - Create or Update
           - task: AzurePowerShell@5
             displayName: HTTP Loadbalancers - Create or Update
             inputs:
               azureSubscription: 'subscription_name'
-              ScriptPath: xc_api_request.ps1
-              ScriptArguments: -filename $('http_loadbalancers') -operation $('http_loadbalancers') -path $(directory) -namespace $(namespace) -domain $(domain) -method $(method) -secret $(secret) -content $('application/json')
+              ScriptPath: xc_api_request_kv.ps1
+              ScriptArguments: -filename $('http_loadbalancers') -operation $('http_loadbalancers') -path $(directory) -namespace $(namespace) -domain $(domain) -method $(method) -content $('application/json') -azsubname $(azsubname) -azkvname $(azkvname) -azkvsecretname $(azkvsecretname)
               TargetAzurePs: LatestVersion
